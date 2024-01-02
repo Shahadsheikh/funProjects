@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="stylesheet" type="text/css" href="calci.css">
+</head>
+<body>
+  <div id="calculator">
+    <input type="text" id="result" disabled>
+    <br>
+    <button onclick="appendValue('7')">7</button>
+    <button onclick="appendValue('8')">8</button>
+    <button onclick="appendValue('9')">9</button>
+    <button onclick="setOperator('/')">/</button>
+    <br>
+    <button onclick="appendValue('4')">4</button>
+    <button onclick="appendValue('5')">5</button>
+    <button onclick="appendValue('6')">6</button>
+    <button onclick="setOperator('*')">*</button>
+    <br>
+    <button onclick="appendValue('1')">1</button>
+    <button onclick="appendValue('2')">2</button>
+    <button onclick="appendValue('3')">3</button>
+    <button onclick="setOperator('-')">-</button>
+    <br>
+    <button onclick="appendValue('0')">0</button>
+    <button onclick="appendDecimal()">.</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="setOperator('+')">+</button>
+    <br>
+    <button onclick="clearDisplay()">C</button>
+  </div>
+
+  <script>
+    let currentValue = '';
+    let currentOperator = '';
+    let previousValue = '';
+
+    function appendValue(value) {
+      currentValue += value;
+      updateDisplay();
+    }
+
+    function appendDecimal() {
+      if (!currentValue.includes('.')) {
+        currentValue += '.';
+        updateDisplay();
+      }
+    }
+
+    function setOperator(operator) {
+      if (currentValue !== '') {
+        currentOperator = operator;
+        previousValue = currentValue;
+        currentValue = '';
+        updateDisplay();
+      }
+    }
+
+    function calculate() {
+      if (currentValue !== '' && previousValue !== '') {
+        switch (currentOperator) {
+          case '+':
+            currentValue = (parseFloat(previousValue) + parseFloat(currentValue)).toString();
+            break;
+          case '-':
+            currentValue = (parseFloat(previousValue) - parseFloat(currentValue)).toString();
+            break;
+          case '*':
+            currentValue = (parseFloat(previousValue) * parseFloat(currentValue)).toString();
+            break;
+          case '/':
+            currentValue = (parseFloat(previousValue) / parseFloat(currentValue)).toString();
+            break;
+          default:
+            break;
+        }
+        currentOperator = '';
+        previousValue = '';
+        updateDisplay();
+      }
+    }
+
+    function clearDisplay() {
+      currentValue = '';
+      currentOperator = '';
+      previousValue = '';
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      document.getElementById('result').value = currentValue || '0';
+    }
+  </script>
+</body>
+</html>

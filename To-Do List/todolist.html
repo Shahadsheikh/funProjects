@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      /* margin: 0; */
+      /* background-color: #f0f0f0; */
+    }
+
+    .container {
+      width: 50%;
+      background: rgb(111, 191, 216);
+      border-radius: 10px;
+      min-width: 450px;
+      min-height: 100px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
+
+    #todo-list {
+      padding: 10px 20px;
+    }
+
+    #taskInput {
+      width: 75%;
+      height: 30px;
+      padding: 10px;
+      color: #111111;
+      font-weight: 500;
+      border-radius: 5px;
+      font-size: 16px;
+      border: 2px solid #d1d3d4;
+      outline: none;
+    }
+
+    #taskInput:focus {
+      border-color: #0d75ec;
+    }
+
+    #tasks {
+      border-radius: 10px;
+      width: 80%;
+      background-color: #ffffff;
+      padding: 25px 0px 20px 0px;
+      margin: 90px 150px 20px 0px;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      cursor: pointer;
+      position: relative;
+      padding: 15px;
+      list-style-type: none;
+      background: #eee;
+      font-size: 18px;
+      transition: 0.2s;
+      border-radius: 5px;
+      margin-bottom: 8px;
+    }
+
+    li:nth-child(odd) {
+      background: #f9f9f9;
+    }
+
+    li:hover {
+      background: #ddd;
+    }
+
+    li.checked {
+      background: #888;
+      color: #fff;
+      text-decoration: line-through;
+    }
+
+    li.checked::before {
+      content: '';
+      position: absolute;
+      border-color: #fff;
+      border-style: solid;
+      border-width: 0 2px 2px 0;
+      top: 50%;
+      left: 10%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      height: 15px;
+      width: 7px;
+    }
+
+    .close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 12px 16px 12px 16px;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .header {
+      background-color: #f44336;
+      padding: 30px 40px;
+      color: white;
+      text-align: center;
+    }
+
+    .header:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    input {
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      width: 60%;
+      padding: 10px;
+      float: left;
+      font-size: 16px;
+    }
+
+    .addBtn {
+      padding: 10px;
+      width: 15%;
+      background: #367be3;
+      color: #f8f9fa;
+      float: left;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      border-radius: 10px;
+    }
+
+    .addBtn:hover {
+      background-color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <center>
+  <div class="container">
+    <div id="todo-list">
+      <h2>To-Do List</h2>
+      <div>
+        <input type="text" id="taskInput" placeholder="New task...">
+        <button class="addBtn" onclick="addTask()">Add Task</button>
+      </div>
+      <ul id="tasks"></ul>
+    </div>
+  </div>
+</center>
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const taskText = taskInput.value.trim();
+
+      if (taskText !== '') {
+        const tasksList = document.getElementById('tasks');
+        const newTask = document.createElement('li');
+        newTask.textContent = taskText;
+
+        const closeBtn = document.createElement('span');
+        closeBtn.className = 'close';
+        closeBtn.innerHTML = 'X';
+        closeBtn.onclick = function () {
+          const listItem = this.parentElement;
+          listItem.style.display = 'none';
+        };
+
+        newTask.appendChild(closeBtn);
+
+        newTask.onclick = function () {
+          this.classList.toggle('checked');
+        };
+
+        tasksList.appendChild(newTask);
+        taskInput.value = '';
+      }
+    }
+  </script>
+</body>
+</html>
